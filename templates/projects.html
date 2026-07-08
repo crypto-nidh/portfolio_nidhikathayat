@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block page_bg_class %}page-projects{% endblock %} {% block content %}
+<section class="pad section-builds">
+    <div class="wrap">
+        <div class="section-head">
+            <span class="pixel-tag tag">CRAFTED ITEMS</span>
+            <h2>Projects</h2>
+        </div>
+        <div class="proj-grid">
+            {% for proj in projects %}
+            <div class="item-card {{ proj.sev_class }}">
+                <div class="item-thumb">
+                    <img src="{{ url_for('static', filename=proj.image) }}" alt="{{ proj.title }} screenshot">
+                    <span class="sev {{ proj.sev_class }}">{{ proj.sev_label }}</span>
+                </div>
+                <div class="item-body">
+                    <h3>{{ proj.title }}</h3>
+                    {% for p in proj.paragraphs %}
+                    <p>{{ p }}</p>
+                    {% endfor %}
+                    <div class="proj-tags">{% for t in proj.tags %}<span class="tag">{{ t }}</span>{% endfor %}</div>
+                    <a href="{{ proj.link }}" class="proj-link">▶ VIEW ON GITHUB</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

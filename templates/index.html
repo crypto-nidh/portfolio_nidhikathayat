@@ -1,0 +1,235 @@
+{% extends "base.html" %} {% block page_bg_class %}page-home{% endblock %} {% block content %}
+<!-- HERO / PIXEL SCENE -->
+<section class="hero" id="hero">
+    <div class="nebula"></div>
+    <div class="stars" id="stars"></div>
+    <div class="celestial">
+        <span class="ring"></span>
+        <span class="crater" style="width:14px;height:14px;top:12px;left:14px;"></span>
+        <span class="crater" style="width:9px;height:9px;top:34px;left:40px;"></span>
+        <span class="crater" style="width:7px;height:7px;top:20px;left:48px;"></span>
+    </div>
+    <div class="sky-layer" id="cloudLayer"></div>
+    <div class="sky-layer" id="shootingLayer"></div>
+    <div class="mountains">
+        <div class="mtn-far"></div>
+        <div class="castle"></div>
+        <div class="mtn-near"></div>
+    </div>
+
+    <div class="wrap hero-inner">
+        <div class="hero-flex">
+            <div class="portrait-frame">
+                <img src="{{ url_for('static', filename=site.photo) }}" alt="{{ site.name }}" class="portrait-img">
+                <span class="portrait-corner tl"></span>
+                <span class="portrait-corner tr"></span>
+                <span class="portrait-corner bl"></span>
+                <span class="portrait-corner br"></span>
+            </div>
+
+            <div class="pixel-panel dialogue">
+                <span class="qtag pixel">Web Application Security &amp; VAPT explorer</span>
+                <h1>Hi, I'm Nidhi kathayat <span class="accentc">👾</span></h1>
+                <p>I break web apps for fun — then tell you how to fix them.</p>
+                <div class="btn-row">
+                    <a href="{{ url_for('projects') }}" class="pixel-btn primary">▶ View Builds</a>
+                    <a href="{{ url_for('contact') }}" class="pixel-btn">✉ Contact Me</a>
+                </div>
+                <span class="arrow">▼</span>
+            </div>
+        </div>
+
+        <div class="badge-row">
+            {% for s in stats %}
+            <div class="badge"><span class="ico">{{ s.icon }}</span>
+                <div><b>{{ s.value }}</b><span>{{ s.label }}</span></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT — character sheet style -->
+<section class="pad section-about" id="about">
+    <div class="wrap">
+        <div class="section-head">
+            <span class="pixel-tag tag">CHARACTER INFO</span>
+            <h2>About Me</h2>
+        </div>
+        <div class="about-grid">
+            <div class="about-bio">
+                {% for p in about.paragraphs %}
+                <p>{{ p | safe }}</p>
+                {% endfor %}
+                <div class="pill-row">
+                    {% for tool in about.tools %}
+                    <span class="pill">{{ tool }}</span> {% endfor %}
+                </div>
+            </div>
+            <div class="skill-scroll">
+                {% for col in about.skill_columns %}
+                <div class="skill-col">
+                    <h4>▸ {{ col.title }}</h4>
+                    <div class="pill-row">
+                        {% for item in col.skills %}<span class="pill">{{ item }}</span>{% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="cards-4">
+            {% for c in about.cards %}
+            <div class="stat-tile">
+                <div class="stat-tile-idx">{{ c.idx }}</div>
+                <h3>{{ c.title }}</h3>
+                <p>{{ c.text }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- EXPERIENCE / QUEST LOG — vertical quest path -->
+<section class="pad section-quest" id="experience">
+    <div class="wrap">
+        <div class="section-head">
+            <span class="pixel-tag tag">QUEST LOG</span>
+            <h2>Experience</h2>
+        </div>
+        <div class="quest-path">
+            {% for job in experience %}
+            <div class="quest-node">
+                <div class="quest-marker">{{ loop.index }}</div>
+                <div class="quest-scroll">
+                    <span class="quest-ribbon">✓ COMPLETED</span>
+                    <div class="xp-date">{{ job.date }}</div>
+                    <h3>{{ job.title }}</h3>
+                    <span class="co">@ {{ job.company }}</span>
+                    <ul>
+                        {% for b in job.bullets %}
+                        <li>{{ b }}</li>{% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS / BUILDS — inventory item cards with screenshots -->
+<section class="pad section-builds" id="projects">
+    <div class="wrap">
+        <div class="section-head">
+            <span class="pixel-tag tag">CRAFTED ITEMS</span>
+            <h2>Projects</h2>
+        </div>
+        <div class="proj-grid">
+            {% for proj in projects %}
+            <div class="item-card {{ proj.sev_class }}">
+                <div class="item-thumb">
+                    <img src="{{ url_for('static', filename=proj.image) }}" alt="{{ proj.title }} screenshot">
+                    <span class="sev {{ proj.sev_class }}">{{ proj.sev_label }}</span>
+                </div>
+                <div class="item-body">
+                    <h3>{{ proj.title }}</h3>
+                    {% for p in proj.paragraphs %}
+                    <p>{{ p }}</p>{% endfor %}
+                    <div class="proj-tags">{% for t in proj.tags %}<span class="tag">{{ t }}</span>{% endfor %}</div>
+                    <a href="{{ proj.link }}" class="proj-link">▶ VIEW ON GITHUB</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CERTIFICATIONS / ACHIEVEMENTS — trophy case + leaderboard -->
+<section class="pad section-achievements" id="certifications">
+    <div class="wrap">
+        <div class="section-head">
+            <span class="pixel-tag tag">ACHIEVEMENTS UNLOCKED</span>
+            <h2>Certifications</h2>
+        </div>
+        <div class="trophy-case">
+            {% for cert in certifications %}
+            <div class="trophy {{ 'locked' if cert.status == 'progress' else '' }}">
+                <div class="trophy-medal">
+                    {% if cert.image %}
+                    <img src="{{ url_for('static', filename=cert.image) }}" alt="{{ cert.name }} certificate"> {% else %}
+                    <span class="medal-lock">🔒</span> {% endif %}
+                </div>
+                <span class="status {{ cert.status }}">{{ '✓ DONE' if cert.status == 'done' else '◐ IN PROGRESS' }}</span>
+                <h4>{{ cert.name }}</h4>
+                <span class="issuer">{{ cert.issuer }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h3 class="board-title">🏆 CTF LEADERBOARD</h3>
+        <div class="leaderboard">
+            {% for a in achievements %}
+            <div class="board-row">
+                <span class="board-rank">{{ a.rank }}</span>
+                <p><b>{{ a.title }}</b><span>{{ a.detail }}</span></p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="pad" id="education">
+    <div class="wrap">
+        <div class="section-head">
+            <span class="pixel-tag tag">BACKGROUND</span>
+            <h2>Education</h2>
+        </div>
+        <div class="pixel-panel edu-card">
+            <div>
+                <h3>{{ education.degree }}</h3><span class="sch">{{ education.school }}</span></div>
+            <div class="yr">{{ education.years }}</div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT — mailbox / send-a-letter style -->
+<section class="pad section-contact" id="contact">
+    <div class="wrap">
+        <div class="mailbox-panel">
+            <div class="section-head" style="text-align:center;">
+                <span class="pixel-tag tag">LET'S TALK</span>
+                <h2>✉ Send a Message</h2>
+            </div>
+            <p>Have a bug bounty tip, a CTF team invite, or a role to talk about? Send a message below and it'll land straight in my inbox.</p>
+            <div class="contact-links">
+                <a href="mailto:{{ site.email }}" class="pixel-btn">✉ EMAIL</a>
+                <a href="{{ site.linkedin }}" target="_blank" rel="noopener" class="pixel-btn">🔗 LINKEDIN</a>
+                <a href="{{ site.github }}" target="_blank" rel="noopener" class="pixel-btn">💻 GITHUB</a>
+            </div>
+
+            <form id="contactForm" class="contact-form">
+                <div class="field">
+                    <label for="name">NAME</label>
+                    <input type="text" id="name" name="name" required maxlength="120">
+                </div>
+                <div class="field">
+                    <label for="email">EMAIL</label>
+                    <input type="email" id="email" name="email" required maxlength="150">
+                </div>
+                <div class="field">
+                    <label for="message">MESSAGE</label>
+                    <textarea id="message" name="message" rows="5" required maxlength="5000"></textarea>
+                </div>
+                <!-- honeypot: real users never see or fill this -->
+                <div class="field hp-field" aria-hidden="true">
+                    <label for="website">Website</label>
+                    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                </div>
+                <button type="submit" class="pixel-btn primary seal-btn" id="submitBtn">▶ SEND MESSAGE</button>
+                <div class="form-status" id="formStatus"></div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

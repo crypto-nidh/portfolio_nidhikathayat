@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block page_bg_class %}page-contact{% endblock %} {% block content %}
+<section class="pad section-contact">
+    <div class="wrap">
+        <div class="mailbox-panel">
+            <div class="section-head" style="text-align:center;">
+                <span class="pixel-tag tag">LET'S TALK</span>
+                <h2>✉ Send a Message</h2>
+            </div>
+            <p>Have a bug bounty tip, a CTF team invite, or a role to talk about? Send a message below and it'll land straight in my inbox.</p>
+            <div class="contact-links">
+                <a href="mailto:{{ site.email }}" class="pixel-btn">✉ EMAIL</a>
+                <a href="{{ site.linkedin }}" target="_blank" rel="noopener" class="pixel-btn">🔗 LINKEDIN</a>
+                <a href="{{ site.github }}" target="_blank" rel="noopener" class="pixel-btn">💻 GITHUB</a>
+            </div>
+
+            <form id="contactForm" class="contact-form">
+                <div class="field">
+                    <label for="name">NAME</label>
+                    <input type="text" id="name" name="name" required maxlength="120">
+                </div>
+                <div class="field">
+                    <label for="email">EMAIL</label>
+                    <input type="email" id="email" name="email" required maxlength="150">
+                </div>
+                <div class="field">
+                    <label for="message">MESSAGE</label>
+                    <textarea id="message" name="message" rows="5" required maxlength="5000"></textarea>
+                </div>
+                <div class="field hp-field" aria-hidden="true">
+                    <label for="website">Website</label>
+                    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                </div>
+                <button type="submit" class="pixel-btn primary seal-btn" id="submitBtn">▶ SEND MESSAGE</button>
+                <div class="form-status" id="formStatus"></div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

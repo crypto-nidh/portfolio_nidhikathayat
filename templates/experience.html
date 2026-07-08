@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block page_bg_class %}page-experience{% endblock %} {% block content %}
+<section class="pad section-quest">
+    <div class="wrap">
+        <div class="section-head">
+            <span class="pixel-tag tag">QUEST LOG</span>
+            <h2>Experience</h2>
+        </div>
+        <div class="quest-path">
+            {% for job in experience %}
+            <div class="quest-node">
+                <div class="quest-marker">{{ loop.index }}</div>
+                <div class="quest-scroll">
+                    <span class="quest-ribbon">✓ COMPLETED</span>
+                    <div class="xp-date">{{ job.date }}</div>
+                    <h3>{{ job.title }}</h3>
+                    <span class="co">@ {{ job.company }}</span>
+                    <ul>
+                        {% for b in job.bullets %}
+                        <li>{{ b }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

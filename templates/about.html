@@ -1,0 +1,41 @@
+{% extends "base.html" %} {% block page_bg_class %}page-about{% endblock %} {% block content %}
+<section class="pad section-about">
+    <div class="wrap">
+        <div class="section-head">
+            <span class="pixel-tag tag">CHARACTER INFO</span>
+            <h2>About Me</h2>
+        </div>
+        <div class="about-grid">
+            <div class="about-bio">
+                {% for p in about.paragraphs %}
+                <p>{{ p | safe }}</p>
+                {% endfor %}
+                <div class="pill-row">
+                    {% for tool in about.tools %}
+                    <span class="pill">{{ tool }}</span> {% endfor %}
+                </div>
+            </div>
+            <div class="skill-scroll">
+                {% for col in about.skill_columns %}
+                <div class="skill-col">
+                    <h4>▸ {{ col.title }}</h4>
+                    <div class="pill-row">
+                        {% for item in col.skills %}<span class="pill">{{ item }}</span>{% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="cards-4">
+            {% for c in about.cards %}
+            <div class="stat-tile">
+                <div class="stat-tile-idx">{{ c.idx }}</div>
+                <h3>{{ c.title }}</h3>
+                <p>{{ c.text }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

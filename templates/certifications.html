@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% block page_bg_class %}page-certifications{% endblock %} {% block content %}
+<section class="pad section-achievements">
+    <div class="wrap">
+        <div class="section-head">
+            <span class="pixel-tag tag">ACHIEVEMENTS UNLOCKED</span>
+            <h2>Certifications</h2>
+        </div>
+        <div class="trophy-case">
+            {% for cert in certifications %}
+            <div class="trophy {{ 'locked' if cert.status == 'progress' else '' }}">
+                <div class="trophy-medal">
+                    {% if cert.image %}
+                    <img src="{{ url_for('static', filename=cert.image) }}" alt="{{ cert.name }} certificate"> {% else %}
+                    <span class="medal-lock">🔒</span> {% endif %}
+                </div>
+                <span class="status {{ cert.status }}">{{ '✓ DONE' if cert.status == 'done' else '◐ IN PROGRESS' }}</span>
+                <h4>{{ cert.name }}</h4>
+                <span class="issuer">{{ cert.issuer }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h3 class="board-title">🏆 CTF LEADERBOARD</h3>
+        <div class="leaderboard">
+            {% for a in achievements %}
+            <div class="board-row">
+                <span class="board-rank">{{ a.rank }}</span>
+                <p><b>{{ a.title }}</b><span>{{ a.detail }}</span></p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
